@@ -10,6 +10,8 @@
 
 @implementation Item
 
+@synthesize thumbnailURL, thumbnailURLRetina, avatarURL, avatarURLRetina, numComments, numLikes, title, content, type, timeSince, actionDescription, name;
+
 - (id)init
 {
     if (self == nil)
@@ -19,15 +21,28 @@
     return self;
 }
 
-- (NSString *)getThumbnailURL
-{
-    return thumbnailURLRetina;
-}
-
 - (void)loadDataFromDictionary:(NSDictionary *)dictionary
 {
     thumbnailURL = [dictionary objectForKey:@"iphone_thumbnail"];
     thumbnailURLRetina = [dictionary objectForKey:@"iphone_thumbnail_retina"];
+    avatarURL = [dictionary objectForKey:@"iphone_owner_avatar"];
+    avatarURLRetina = [dictionary objectForKey:@"iphone_owner_avatar_retina"];
+    
+    name = [dictionary objectForKey:@"name"];
+    
+    NSNumber *nComments = [dictionary objectForKey:@"num_comments"];
+    numComments = nComments.intValue;
+
+    NSNumber *nLikes = [dictionary objectForKey:@"num_likes"];
+    numLikes = nLikes.intValue;
+    
+    title = [dictionary objectForKey:@"title"];
+    content = [dictionary objectForKey:@"content"];
+    type = [dictionary objectForKey:@"type"];
+    
+    timeSince = [dictionary objectForKey:@"time_since"];
+    
+    actionDescription = [dictionary objectForKey:@"action_description"];
 }
 
 @end

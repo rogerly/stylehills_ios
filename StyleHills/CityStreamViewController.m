@@ -127,7 +127,7 @@
     {
         Item* item = [items objectAtIndex:i];
         UIImageView *browseImage = (UIImageView *)[cell viewWithTag:100 + counter];
-        [browseImage setImageWithURL:[NSURL URLWithString:[item getThumbnailURL]]];
+        [browseImage setImageWithURL:[NSURL URLWithString:item.thumbnailURLRetina]];
         browseImage.hidden = NO;
 
 //        UIButton *browseButton = (UIButton *)[cell viewWithTag:200 + counter];

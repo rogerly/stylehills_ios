@@ -31,6 +31,10 @@
 
 #import "RootViewController.h"
 #import "CityStreamViewController.h"
+#import "EGOPhotoViewController.h"
+#import "AlbumPhoto.h"
+#import "AlbumPhotoSource.h"
+#import "ProfileViewController.h"
 
 @implementation StyleHillsAppDelegate
 
@@ -43,6 +47,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navBarBackground.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:184.0/255 green:44.0/255 blue:58.0/255 alpha:1.0]];
     // use custom URLCache to get disk caching on iOS
     AFURLCache *URLCache = [[AFURLCache alloc] initWithMemoryCapacity:1024*1024   // 1MB mem cache
                                                           diskCapacity:1024*1024*5 // 5MB disk cache
@@ -50,10 +57,23 @@
     
 	[NSURLCache setSharedURLCache:URLCache];
     
-    UIViewController *cityStreamViewController = [[CityStreamViewController alloc] initWithNibName:@"CityStreamViewController" bundle:nil];
-    UINavigationController *cityStreamNavController = [[UINavigationController alloc] initWithRootViewController:cityStreamViewController];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSNumber numberWithInt:2] forKey:@"profile_id"];
     
-    viewControllers = [NSArray arrayWithObjects:cityStreamNavController, nil];
+    NSInteger profileID = [defaults integerForKey:@"profile_id"];
+    
+    ProfileViewController *profileView = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:nil profileID:profileID];
+    UINavigationController *profileNavController = [[UINavigationController alloc] initWithRootViewController:profileView];
+    
+    AlbumPhotoSource *photos = [[AlbumPhotoSource alloc] initWithPhotos:[NSArray arrayWithObjects:[[AlbumPhoto alloc] initWithImageURL:[NSURL URLWithString:@"http://s3.amazonaws.com:80/stylehills_qa/cache%2F65%2F25%2F6525bf35c26f3c93caa216b126333b94.jpg"] name:@"one"], [[AlbumPhoto alloc] initWithImageURL:[NSURL URLWithString:@"http://s3.amazonaws.com:80/stylehills_qa/cache%2F6f%2F35%2F6f35cea35b603c6b642e51fca8c9cf8c.jpg"] name:@"two"], [[AlbumPhoto alloc] initWithImageURL:[NSURL URLWithString:@"http://s3.amazonaws.com:80/stylehills_qa/cache%2F3f%2Fb7%2F3fb7559fe36be92002039a7eeed6e0cb.jpg"] name:@"three"], [[AlbumPhoto alloc] initWithImageURL:[NSURL URLWithString:@"http://s3.amazonaws.com:80/stylehills_qa/cache%2Fde%2F06%2Fde069f0468af2fe07afcf74440dcf41b.jpg"] name:@"four"], nil]];
+    
+    UIViewController *photoViewController = [[EGOPhotoViewController alloc] initWithPhotoSource:photos];
+    UINavigationController *cityStreamNavController = [[UINavigationController alloc] initWithRootViewController:photoViewController];
+//    UIViewController *cityStreamViewController = [[CityStreamViewController alloc] initWithNibName:@"CityStreamViewController" bundle:nil];
+//    UINavigationController *cityStreamNavController = [[UINavigationController alloc] initWithRootViewController:cityStreamViewController];
+    
+    viewControllers = [NSArray arrayWithObjects:profileNavController, nil];
+//    viewControllers = [NSArray arrayWithObjects:cityStreamNavController, nil];
     
     RootViewController *rootVC = [[RootViewController alloc] initWithNibName:@"RootViewController" bundle:nil];
     [rootVC setViewControllers:viewControllers];
