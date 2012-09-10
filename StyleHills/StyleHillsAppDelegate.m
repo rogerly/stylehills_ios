@@ -126,4 +126,11 @@
 
 }
 
++(NSInteger)currentProfile
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSInteger profileID = [defaults integerForKey:@"profile_id"];
+    return profileID;
+}
+
 @end

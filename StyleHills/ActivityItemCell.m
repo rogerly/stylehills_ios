@@ -8,13 +8,15 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "ActivityItemCell.h"
+#import "CommentViewController.h"
 
 @implementation ActivityItemCell
 @synthesize likes;
 @synthesize comments;
 @synthesize likeCommentButton;
+@synthesize delegate;
 
-@synthesize avatar, name, timeSince, activityDescription, previewImage;
+@synthesize avatar, name, timeSince, activityDescription, previewImage, contentTypeID, postID;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -35,6 +37,10 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)doLikeComment:(id)sender {
+- (IBAction)doLikeComment:(id)sender
+{
+    CommentViewController *vc = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil contentTypeID:contentTypeID postID:postID];
+    
+    [[delegate navigationController] pushViewController:vc animated:YES];
 }
 @end

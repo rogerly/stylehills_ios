@@ -93,6 +93,7 @@
 
 - (void)loadProfileInfo
 {
+    [items removeAllObjects];
     NSString *profileURL = [NSString stringWithFormat:@"http://www.stylehills.com/api/profile/%d/", profileID];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: profileURL]];
     
@@ -303,6 +304,11 @@
     else
         cell.comments.text = [NSString stringWithFormat:@"%d people", item.numComments];
 
+    cell.contentTypeID = item.contentTypeID;
+    cell.postID = item.postID;
+    
+    cell.delegate = self;
+    
     return cell;
 }
 

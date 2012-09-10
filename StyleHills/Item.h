@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) NSString *thumbnailURL;
 @property (strong, nonatomic) NSString *thumbnailURLRetina;
+@property (strong, nonatomic) NSString *commentThumbnailURL;
+@property (strong, nonatomic) NSString *commentThumbnailURLRetina;
 @property (strong, nonatomic) NSString *avatarURL;
 @property (strong, nonatomic) NSString *avatarURLRetina;
 @property (strong, nonatomic) NSString *name;
@@ -24,6 +26,8 @@
 @property (strong, nonatomic) NSString *actionDescription;
 @property (assign, nonatomic) NSInteger numComments;
 @property (assign, nonatomic) NSInteger numLikes;
+@property (assign, nonatomic) NSInteger contentTypeID;
+@property (assign, nonatomic) NSInteger postID;
 
 - (void)loadDataFromDictionary:(NSDictionary *)dictionary;
 

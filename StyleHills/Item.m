@@ -10,7 +10,7 @@
 
 @implementation Item
 
-@synthesize thumbnailURL, thumbnailURLRetina, avatarURL, avatarURLRetina, numComments, numLikes, title, content, type, timeSince, actionDescription, name;
+@synthesize thumbnailURL, thumbnailURLRetina, commentThumbnailURL, commentThumbnailURLRetina, avatarURL, avatarURLRetina, numComments, numLikes, title, content, type, timeSince, actionDescription, name, contentTypeID, postID;
 
 - (id)init
 {
@@ -25,6 +25,8 @@
 {
     thumbnailURL = [dictionary objectForKey:@"iphone_thumbnail"];
     thumbnailURLRetina = [dictionary objectForKey:@"iphone_thumbnail_retina"];
+    commentThumbnailURL = [dictionary objectForKey:@"iphone_comment_thumbnail"];
+    commentThumbnailURLRetina = [dictionary objectForKey:@"iphone_comment_thumbnail_retina"];
     avatarURL = [dictionary objectForKey:@"iphone_owner_avatar"];
     avatarURLRetina = [dictionary objectForKey:@"iphone_owner_avatar_retina"];
     
@@ -43,6 +45,12 @@
     timeSince = [dictionary objectForKey:@"time_since"];
     
     actionDescription = [dictionary objectForKey:@"action_description"];
+    
+    NSNumber *nContentTypeID = [dictionary objectForKey:@"content_type_id"];
+    contentTypeID = nContentTypeID.intValue;
+
+    NSNumber *nPostID = [dictionary objectForKey:@"id"];
+    postID = nPostID.intValue;
 }
 
 @end

@@ -39,4 +39,6 @@
 
 + (StyleHillsAppDelegate*) sharedAppDelegate;
 
++(NSInteger)currentProfile;
+
 @end
